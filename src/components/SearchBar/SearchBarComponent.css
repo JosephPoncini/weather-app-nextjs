@@ -1,0 +1,9 @@
+input{
+    text-align: center;
+}
+
+::placeholder{
+    font-size: 24px;
+    color: grey;
+    font-family: Thabit;
+}
