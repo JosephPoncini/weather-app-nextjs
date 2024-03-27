@@ -6,10 +6,23 @@ import NavBarComponent from "@/components/NavBar/NavBarComponent";
 import SearchBarComponent from "@/components/SearchBar/SearchBarComponent";
 import { IDashboard, ILocation, IWeatherData } from "@/interfaces/interfaces";
 import { GetCurrentWeatherData, GetWeatherForecastData } from "@/utils/DataServices";
-import { GetLocation, convertKelvin } from "@/utils/utilities";
-// import { GetLocation } from "@/utils/utilities";
-import Image from "next/image";
+import { GetLocation, GetWeatherIcon } from "@/utils/utilities";
+
+import cloud from "@/assets/WeatherIcons/Cloud.png";
+import cloudFog from "@/assets/WeatherIcons/CloudFog.png";
+import cloudLightning from "@/assets/WeatherIcons/CloudLightning.png";
+import cloudMoon from "@/assets/WeatherIcons/CloudMoon.png";
+import cloudOvercast from "@/assets/WeatherIcons/CloudOvercast.png";
+import cloudRain from "@/assets/WeatherIcons/CloudRain.png";
+import cloudDrizzle from "@/assets/WeatherIcons/CloudDrizzle.png";
+import cloudSun from "@/assets/WeatherIcons/CloudSun.png";
+import moon from "@/assets/WeatherIcons/Moon.png";
+import snowflake from "@/assets/WeatherIcons/Snowflake.png";
+import sun from "@/assets/WeatherIcons/Sun.png";
+
+
 import { useEffect, useState } from "react";
+
 
 export default function Home() {
 
@@ -89,8 +102,8 @@ export default function Home() {
   const [location, setLocation] = useState<ILocation>(nowhere);
   const [currentWeatherData, setCurrentWeatherData] = useState<IWeatherData>(emptyWeatherData);
   const [forecastData, setForecastData] = useState<any>();
-
   const [dashboard, setDashboard] = useState<IDashboard>(emptyDashboard);
+
 
   // const [location, setLocation] = useState();
 
@@ -134,15 +147,17 @@ export default function Home() {
       units: unit,
       currentHigh: "",
       currentLow: "",
-      weatherIcon: "",
+      weatherIcon: GetWeatherIcon(currentWeatherData.weather[0].main, currentWeatherData.weather[0].description),
       forecast: []
     }
 
-    setDashboard(myDashboard);      
+    // console.log(myDashboard);
+    setDashboard(myDashboard);
     }
 
 
   }, [currentWeatherData])
+
 
   return (
     <div className="background-image">

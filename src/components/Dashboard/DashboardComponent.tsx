@@ -1,28 +1,55 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import "./DashboardComponent.css"
 import { IDashboard } from '@/interfaces/interfaces';
+import emptyStar from '@/assets/Empty Star.png'
+import filledStar from '@/assets/Filled Star.png'
 
-const DashboardComponent = (props:IDashboard) => {
+import cloud from "@/assets/WeatherIcons/Cloud.png";
+import cloudFog from "@/assets/WeatherIcons/CloudFog.png";
+import cloudLightning from "@/assets/WeatherIcons/CloudLightning.png";
+import cloudMoon from "@/assets/WeatherIcons/CloudMoon.png";
+import cloudOvercast from "@/assets/WeatherIcons/CloudOvercast.png";
+import cloudRain from "@/assets/WeatherIcons/CloudRain.png";
+import cloudDrizzle from "@/assets/WeatherIcons/CloudDrizzle.png";
+import cloudSun from "@/assets/WeatherIcons/CloudSun.png";
+import moon from "@/assets/WeatherIcons/Moon.png";
+import snowflake from "@/assets/WeatherIcons/Snowflake.png";
+import sun from "@/assets/WeatherIcons/Sun.png";
+
+import Clock from './Clock';
+
+
+
+const DashboardComponent = (props: IDashboard) => {
+
+  const [star, setStar] = useState<any>(emptyStar);
+
   return (
     <div className='w-[1200px]'>
       <div className="mainBody font-Thabit">
         <div className="leftPanel">
-          <div id="location" className='text-[36px]'>{props.city}</div>
-          <div>
-            <img src="" alt="weather icon" />
-            <div id="description" className='text-[20px]' >{props.description}</div>
+          <div id="location" className='text-[36px] w-[90%] relative flex justify-center'>
+            <Image
+              src={star} // Assuming props.weatherIcon is the URL of the weather icon
+              alt="favorited icon"
+              className="absolute top-2 right-0 w-8 h-auto  "
+            />
+            <div>
+              {props.city}
+            </div>
           </div>
-
-          <div id="date" className='text-[24px]'>[Date]</div>
-          <div id="time" className='text-[24px]'>[Time]</div>
-
-
+          <div>
+            <Image src={props.weatherIcon} alt="weather icon" />
+            <div id="description" className='text-[20px] text-center' >{props.description}</div>
+          </div>
+          <Clock />
         </div>
+
         <div className="rightTopPanel">
-          <div id="currentTemp" className='text-[96px]'>{props.currentTemp + " " + props.units}</div>
+          <div id="currentTemp" className='text-[96px] tracking-[-0.1em]'>{props.currentTemp + "°" + props.units}</div>
           <div id="currentHL" className='text-[36px]'>[H: L:]</div>
         </div>
 

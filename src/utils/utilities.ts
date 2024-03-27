@@ -1,6 +1,18 @@
 import { ILocation } from "@/interfaces/interfaces";
 import { GetCurrentWeatherData } from "./DataServices";
 
+import cloud from "@/assets/WeatherIcons/Cloud.png";
+import cloudFog from "@/assets/WeatherIcons/CloudFog.png";
+import cloudLightning from "@/assets/WeatherIcons/CloudLightning.png";
+import cloudMoon from "@/assets/WeatherIcons/CloudMoon.png";
+import cloudOvercast from "@/assets/WeatherIcons/CloudOvercast.png";
+import cloudRain from "@/assets/WeatherIcons/CloudRain.png";
+import cloudDrizzle from "@/assets/WeatherIcons/CloudDrizzle.png";
+import cloudSun from "@/assets/WeatherIcons/CloudSun.png";
+import moon from "@/assets/WeatherIcons/Moon.png";
+import snowflake from "@/assets/WeatherIcons/Snowflake.png";
+import sun from "@/assets/WeatherIcons/Sun.png";
+
 export const GetLocation = async () => {
 
     let lat = 44.34;
@@ -16,15 +28,55 @@ export const GetLocation = async () => {
     return { lat, lon };
 }
 
-export const convertKelvin = (temp: number, unit: 'C' | 'F'): number => {
-    let convertedTemp: number;
-    if (unit === 'C') {
-        convertedTemp = temp - 273.15; // Kelvin to Celsius
-    } else if (unit === 'F') {
-        convertedTemp = (temp - 273.15) * 9/5 + 32; // Kelvin to Fahrenheit
-    } else {
-        throw new Error('Invalid unit. Use "C" for Celsius or "F" for Fahrenheit.');
+export const GetWeatherIcon = (weather: string, description: string, nighttime: boolean = false) => {
+
+
+    const cloudKeys: Record<string, string> = {
+        'few clouds': 'Partly Cloudy',
+        'scattered clouds': 'Cloudy',
+        'broken clouds': 'Overcast Cloudy',
+        'overcast clouds': 'Overcast Cloudy'
     }
 
-    return parseFloat(convertedTemp.toFixed(1));
+    const nightKeys: Record<string, string> = {
+        'Clear': 'Clear Night',
+        'Partly Cloudy': 'Partly Cloudy Night'
+    }
+
+    const weatherIcons: Record<string, string | any> = {
+        'Tornado': cloudFog,
+        'Snow': snowflake,
+        'Thunderstorm': cloudLightning,
+        'Rain': cloudRain,
+        'Drizzle': cloudDrizzle,
+        'Mist': cloudFog,
+        'Smoke': cloudFog,
+        'Haze': cloudFog,
+        'Dust': cloudFog,
+        'Fog': cloudFog,
+        'Sand': cloudFog,
+        'Ash': cloudFog,
+        'Squall': cloudFog,
+        'Cloudy': cloud,
+        'Clear': sun,
+        'Clear Night': moon,
+        'Partly Cloudy': cloudSun,
+        'Partly Cloudy Night': cloudMoon,
+        'Overcast Cloudy': cloudOvercast
+    };
+
+    let currentWeather = weather;
+
+    if (currentWeather == 'Clouds') {
+        currentWeather = cloudKeys[description];
+    }
+
+    if (nighttime && currentWeather in nightKeys) {
+        currentWeather = nightKeys[currentWeather];
+    }
+
+    // console.log(weatherIcons[currentWeather]);
+    return weatherIcons[currentWeather]
+
 }
+

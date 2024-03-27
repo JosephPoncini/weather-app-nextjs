@@ -20,7 +20,7 @@ export const GetCurrentWeatherData = async (location:ILocation, units:string='im
             console.log("No fetch. An error has occured");
     }
 
-    console.log(data);
+    // console.log(data);
     return data;
 
 }
@@ -30,8 +30,8 @@ export const GetWeatherForecastData = async (location:ILocation, units:string='i
     let promise : Response;
     let data : any;
 
-    console.log("latitude: " + location.lat);
-    console.log("longitude: " + location.lon);
+    // console.log("latitude: " + location.lat);
+    // console.log("longitude: " + location.lon);
 
     switch(location.type){
         case "Geo":
@@ -46,7 +46,7 @@ export const GetWeatherForecastData = async (location:ILocation, units:string='i
             console.log("No fetch. An error has occured");
     }
 
-    console.log(data);
+    // console.log(data);
     return data;
 
 }
