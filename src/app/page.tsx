@@ -130,9 +130,9 @@ export default function Home() {
       description: currentWeatherData.weather[0].description,
       date: "",
       time: "",
-      currentTemp: "",
-      units: "F",
-      currentHigh: `${convertKelvin(currentWeatherData.main.temp, unit)}`,
+      currentTemp: `${currentWeatherData.main.temp.toFixed(1)}`,
+      units: unit,
+      currentHigh: "",
       currentLow: "",
       weatherIcon: "",
       forecast: []

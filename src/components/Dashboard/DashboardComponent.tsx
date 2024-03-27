@@ -22,7 +22,7 @@ const DashboardComponent = (props:IDashboard) => {
 
         </div>
         <div className="rightTopPanel">
-          <div id="currentTemp" className='text-[96px]'>{props.currentTemp}</div>
+          <div id="currentTemp" className='text-[96px]'>{props.currentTemp + " " + props.units}</div>
           <div id="currentHL" className='text-[36px]'>[H: L:]</div>
         </div>
 

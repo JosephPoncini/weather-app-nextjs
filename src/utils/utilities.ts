@@ -17,11 +17,14 @@ export const GetLocation = async () => {
 }
 
 export const convertKelvin = (temp: number, unit: 'C' | 'F'): number => {
+    let convertedTemp: number;
     if (unit === 'C') {
-        return temp - 273.15; // Kelvin to Celsius
+        convertedTemp = temp - 273.15; // Kelvin to Celsius
     } else if (unit === 'F') {
-        return (temp - 273.15) * 9/5 + 32; // Kelvin to Fahrenheit
+        convertedTemp = (temp - 273.15) * 9/5 + 32; // Kelvin to Fahrenheit
     } else {
         throw new Error('Invalid unit. Use "C" for Celsius or "F" for Fahrenheit.');
     }
+
+    return parseFloat(convertedTemp.toFixed(1));
 }
