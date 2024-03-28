@@ -26,6 +26,7 @@ import Clock from './Clock';
 const DashboardComponent = (props: IDashboard) => {
 
   const [star, setStar] = useState<any>(emptyStar);
+  // console.log(props.forecast)
 
   return (
     <div className='w-[1200px]'>
@@ -45,7 +46,7 @@ const DashboardComponent = (props: IDashboard) => {
             <Image src={props.weatherIcon} alt="weather icon" />
             <div id="description" className='text-[20px] text-center' >{props.description}</div>
           </div>
-          <Clock />
+          <Clock timezoneOffset={props.timezone} epochTime={props.epoch}/>
         </div>
 
         <div className="rightTopPanel">
@@ -54,11 +55,19 @@ const DashboardComponent = (props: IDashboard) => {
         </div>
 
         <div className="rightBottomPanel">
-          <div id="day1" className="dayName">[Day]</div>
+          {
+            props.forecast? props.forecast.map( (x, idx) => {
+              let id = `day${idx+1}`;
+              return(
+                <div id={id} className="dayName">{x.day}</div>
+              )
+            }) : null
+          }
+          {/* <div id="day1" className="dayName">[Day]</div>
           <div id="day2" className="dayName">[Day]</div>
           <div id="day3" className="dayName">[Day]</div>
           <div id="day4" className="dayName">[Day]</div>
-          <div id="day5" className="dayName">[Day]</div>
+          <div id="day5" className="dayName">[Day]</div> */}
 
           <div className="dayHL1 dayHighLow">
             <Image src={""} alt="weather icon" className='w-[40px] h-[40px]' />

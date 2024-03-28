@@ -1,4 +1,4 @@
-import { ILocation } from "@/interfaces/interfaces";
+import { IDailyWeather, ILocation, IWeatherForecastData } from "@/interfaces/interfaces";
 import { GetCurrentWeatherData } from "./DataServices";
 
 import cloud from "@/assets/WeatherIcons/Cloud.png";
@@ -80,3 +80,41 @@ export const GetWeatherIcon = (weather: string, description: string, nighttime: 
 
 }
 
+export const GetForecastArray = (forecastData: IWeatherForecastData) => {
+    let res: IDailyWeather[] = [];
+
+    let tomorrow = getDayOfWeek(forecastData.city.timezone);
+    console.log(tomorrow);
+
+    let tomorrowDictionary: Record<string, string> = {
+        'Sun' : 'Mon',
+        'Mon' : 'Tue',
+        'Tue' : 'Wed',
+        'Wed' : 'Thu',
+        'Thu' : 'Fri',
+        'Fri' : 'Sat',
+        'Sat' : 'Sun',
+    }
+
+    for (let i = 0; i < 5; i++) {
+        tomorrow = tomorrowDictionary[tomorrow];        
+        res.push({
+            day: tomorrow,
+            high: "",
+            low: "",
+            weatherIcon: ""
+        });
+    }
+
+    return res
+}
+
+function getDayOfWeek(timezoneOffset:number): string {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const today = new Date((getCurrentEpochTime() + timezoneOffset) * 1000).getUTCDay();
+    return days[today];
+}
+
+export const getCurrentEpochTime = (): number => {
+    return Math.floor(Date.now() / 1000);
+  };

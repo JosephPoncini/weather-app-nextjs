@@ -6,7 +6,7 @@ import NavBarComponent from "@/components/NavBar/NavBarComponent";
 import SearchBarComponent from "@/components/SearchBar/SearchBarComponent";
 import { IDashboard, ILocation, IWeatherData } from "@/interfaces/interfaces";
 import { GetCurrentWeatherData, GetWeatherForecastData } from "@/utils/DataServices";
-import { GetLocation, GetWeatherIcon } from "@/utils/utilities";
+import { GetForecastArray, GetLocation, GetWeatherIcon, getCurrentEpochTime } from "@/utils/utilities";
 
 import cloud from "@/assets/WeatherIcons/Cloud.png";
 import cloudFog from "@/assets/WeatherIcons/CloudFog.png";
@@ -36,8 +36,8 @@ export default function Home() {
   const emptyDashboard: IDashboard = {
     city: "",
     description: "",
-    date: "",
-    time: "",
+    epoch: getCurrentEpochTime(),
+    timezone: 1,
     currentTemp: "",
     units: "F",
     currentHigh: "",
@@ -141,17 +141,19 @@ export default function Home() {
     const myDashboard: IDashboard = {
       city: currentWeatherData.name,
       description: currentWeatherData.weather[0].description,
-      date: "",
-      time: "",
+      epoch: getCurrentEpochTime(),
+      timezone: currentWeatherData.timezone,
       currentTemp: `${currentWeatherData.main.temp.toFixed(1)}`,
       units: unit,
       currentHigh: "",
       currentLow: "",
       weatherIcon: GetWeatherIcon(currentWeatherData.weather[0].main, currentWeatherData.weather[0].description),
-      forecast: []
+      forecast: [],
     }
 
-    // console.log(myDashboard);
+    myDashboard.forecast = forecastData && GetForecastArray(forecastData);
+
+    // console.log(myDashboard.forecast);
     setDashboard(myDashboard);
     }
 
@@ -170,8 +172,8 @@ export default function Home() {
           <DashboardComponent
             city={dashboard.city}
             description={dashboard.description}
-            date={dashboard.date}
-            time={dashboard.time}
+            epoch={dashboard.epoch}
+            timezone={dashboard.timezone}
             currentTemp={dashboard.currentTemp}
             units={dashboard.units}
             currentHigh={dashboard.currentHigh}

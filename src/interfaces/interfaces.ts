@@ -1,75 +1,132 @@
 export interface ILocation {
-    type: "Geo" | "City" | null;
-    lon: number | null;
-    lat: number | null;
-    city: string | null
+  type: "Geo" | "City" | null;
+  lon: number | null;
+  lat: number | null;
+  city: string | null
 }
 
-interface IDailyWeather {
-    day: string
-    weatherIcon: string
-    high: string
-    low: string
+export interface IDailyWeather {
+  day: string
+  weatherIcon: string
+  high: string
+  low: string
 }
 
 export interface IDashboard {
-    city: string
-    description: string
-    date: string
-    time: string
-    currentTemp: string
-    units: "F" | "C"
-    currentHigh: string
-    currentLow: string
-    weatherIcon: string
-    forecast: IDailyWeather[]
+  city: string
+  description: string
+  epoch: number
+  timezone: number
+  currentTemp: string
+  units: "F" | "C"
+  currentHigh: string
+  currentLow: string
+  weatherIcon: string
+  forecast: IDailyWeather[]
 }
 
 export interface IWeatherData {
-    coord: {
-      lon: number;
-      lat: number;
-    };
-    weather: {
-      id: number;
-      main: string;
-      description: string;
-      icon: string;
-    }[];
-    base: string;
-    main: {
-      temp: number;
-      feels_like: number;
-      temp_min: number;
-      temp_max: number;
-      pressure: number;
-      humidity: number;
-      sea_level: number;
-      grnd_level: number;
-    };
-    visibility: number;
-    wind: {
-      speed: number;
-      deg: number;
-      gust: number;
-    };
-    rain: {
-      "1h": number;
-    };
-    clouds: {
-      all: number;
-    };
-    dt: number;
-    sys: {
-      type: number;
-      id: number;
-      country: string;
-      sunrise: number;
-      sunset: number;
-    };
-    timezone: number;
+  coord: {
+    lon: number;
+    lat: number;
+  };
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  base: string;
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
+    sea_level: number;
+    grnd_level: number;
+  };
+  visibility: number;
+  wind: {
+    speed: number;
+    deg: number;
+    gust: number;
+  };
+  rain: {
+    "1h": number;
+  };
+  clouds: {
+    all: number;
+  };
+  dt: number;
+  sys: {
+    type: number;
+    id: number;
+    country: string;
+    sunrise: number;
+    sunset: number;
+  };
+  timezone: number;
+  id: number;
+  name: string;
+  cod: number;
+}
+
+export interface IWeatherForecastData {
+  cod: string;
+  message: number;
+  cnt: number;
+  list: WeatherItem[];
+  city: {
     id: number;
     name: string;
-    cod: number;
-  }
-  
+    coord: {
+      lat: number;
+      lon: number;
+    };
+    country: string;
+    population: number;
+    timezone: number;
+    sunrise: number;
+    sunset: number;
+  };
+}
+
+interface WeatherItem {
+  dt: number;
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    sea_level: number;
+    grnd_level: number;
+    humidity: number;
+    temp_kf: number;
+  };
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  clouds: {
+    all: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
+    gust: number;
+  };
+  visibility: number;
+  pop: number;
+  rain: {
+    '3h': number;
+  };
+  sys: {
+    pod: string;
+  };
+  dt_txt: string;
+}
