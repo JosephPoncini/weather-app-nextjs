@@ -51,7 +51,7 @@ const DashboardComponent = (props: IDashboard) => {
 
         <div className="rightTopPanel">
           <div id="currentTemp" className='text-[96px] tracking-[-0.1em]'>{props.currentTemp + "°" + props.units}</div>
-          <div id="currentHL" className='text-[36px]'>[H: L:]</div>
+          <div id="currentHL" className='text-[36px]'>H:{props.todayHighLow.high}°{props.units} L:{props.todayHighLow.low}</div>
         </div>
 
         <div className="rightBottomPanel">
@@ -59,7 +59,7 @@ const DashboardComponent = (props: IDashboard) => {
             props.forecast? props.forecast.map( (x, idx) => {
               let id = `day${idx+1}`;
               return(
-                <div id={id} className="dayName">{x.day}</div>
+                <div key={idx} id={id} className="dayName">{x.day}</div>
               )
             }) : null
           }

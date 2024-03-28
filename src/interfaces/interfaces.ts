@@ -8,8 +8,17 @@ export interface ILocation {
 export interface IDailyWeather {
   day: string
   weatherIcon: string
-  high: string
-  low: string
+  highLow: IHighLow
+}
+
+export interface IHighLow {
+  high: number
+  low: number
+}
+
+export interface IForecast {
+  TodayHighLow: IHighLow
+  forecast: IDailyWeather[]
 }
 
 export interface IDashboard {
@@ -19,9 +28,8 @@ export interface IDashboard {
   timezone: number
   currentTemp: string
   units: "F" | "C"
-  currentHigh: string
-  currentLow: string
   weatherIcon: string
+  todayHighLow: IHighLow
   forecast: IDailyWeather[]
 }
 

@@ -4,9 +4,9 @@ import DashboardComponent from "@/components/Dashboard/DashboardComponent";
 import FooterComponent from "@/components/Footer/FooterComponent";
 import NavBarComponent from "@/components/NavBar/NavBarComponent";
 import SearchBarComponent from "@/components/SearchBar/SearchBarComponent";
-import { IDashboard, ILocation, IWeatherData } from "@/interfaces/interfaces";
+import { IDailyWeather, IDashboard, IForecast, IHighLow, ILocation, IWeatherData, IWeatherForecastData } from "@/interfaces/interfaces";
 import { GetCurrentWeatherData, GetWeatherForecastData } from "@/utils/DataServices";
-import { GetForecastArray, GetLocation, GetWeatherIcon, getCurrentEpochTime } from "@/utils/utilities";
+import { GetLocation, GetWeatherIcon, deepClone, getCurrentEpochTime } from "@/utils/utilities";
 
 import cloud from "@/assets/WeatherIcons/Cloud.png";
 import cloudFog from "@/assets/WeatherIcons/CloudFog.png";
@@ -22,6 +22,7 @@ import sun from "@/assets/WeatherIcons/Sun.png";
 
 
 import { useEffect, useState } from "react";
+import { GetFiveDayData } from "@/utils/forecastUtilities";
 
 
 export default function Home() {
@@ -33,6 +34,17 @@ export default function Home() {
     city: null
   }
 
+  const emptyHighLow: IHighLow = {
+    high: 0,
+    low: 0,
+  }
+
+
+  const emptyForecast: IForecast = {
+    TodayHighLow: emptyHighLow,
+    forecast: []
+  }
+
   const emptyDashboard: IDashboard = {
     city: "",
     description: "",
@@ -40,9 +52,8 @@ export default function Home() {
     timezone: 1,
     currentTemp: "",
     units: "F",
-    currentHigh: "",
-    currentLow: "",
     weatherIcon: "",
+    todayHighLow: emptyHighLow,
     forecast: []
   }
 
@@ -137,28 +148,54 @@ export default function Home() {
   }, [location])
 
   useEffect(() => {
-    if(currentWeatherData){
-    const myDashboard: IDashboard = {
-      city: currentWeatherData.name,
-      description: currentWeatherData.weather[0].description,
-      epoch: getCurrentEpochTime(),
-      timezone: currentWeatherData.timezone,
-      currentTemp: `${currentWeatherData.main.temp.toFixed(1)}`,
-      units: unit,
-      currentHigh: "",
-      currentLow: "",
-      weatherIcon: GetWeatherIcon(currentWeatherData.weather[0].main, currentWeatherData.weather[0].description),
-      forecast: [],
+    if (currentWeatherData && forecastData) {
+
+      let myForecast: IForecast = GetFiveDayData(forecastData)
+
+      let myDashboard = deepClone(dashboard)
+      // const myDashboard: IDashboard = {
+      //   city: currentWeatherData.name,
+      //   description: currentWeatherData.weather[0].description,
+      //   epoch: getCurrentEpochTime(),
+      //   timezone: currentWeatherData.timezone,
+      //   currentTemp: `${currentWeatherData.main.temp.toFixed(1)}`,
+      //   units: unit,
+      //   weatherIcon: GetWeatherIcon(currentWeatherData.weather[0].main, currentWeatherData.weather[0].description),
+      //   todayHighLow: emptyHighLow,
+      //   forecast: [],
+      // }
+      myDashboard.city = currentWeatherData.name;
+      myDashboard.description = currentWeatherData.weather[0].description;
+      myDashboard.epoch = getCurrentEpochTime();
+      myDashboard.timezone = currentWeatherData.timezone;
+      myDashboard.currentTemp = `${currentWeatherData.main.temp.toFixed(1)}`;
+      myDashboard.units = unit;
+      myDashboard.weatherIcon = GetWeatherIcon(currentWeatherData.weather[0].main, currentWeatherData.weather[0].description);
+      myDashboard.todayHighLow = myForecast.TodayHighLow
+      myDashboard.forecast = myForecast.forecast
+
+
+      // console.log(myDashboard.forecast);
+      setDashboard(myDashboard);
+
     }
 
-    myDashboard.forecast = forecastData && GetForecastArray(forecastData);
-
-    // console.log(myDashboard.forecast);
-    setDashboard(myDashboard);
-    }
 
 
   }, [currentWeatherData])
+
+  // useEffect(() => {
+  //   if (forecastData) {
+
+  //     let myForecast: IForecast = GetFiveDayData(forecastData)
+  //     let myDashboard = deepClone(dashboard)
+
+  //     myDashboard.todayHighLow = myForecast.TodayHighLow
+  //     myDashboard.forecast = myForecast.forecast
+
+  //     setDashboard(myDashboard);
+  //   }
+  // }, [forecastData])
 
 
   return (
@@ -176,9 +213,8 @@ export default function Home() {
             timezone={dashboard.timezone}
             currentTemp={dashboard.currentTemp}
             units={dashboard.units}
-            currentHigh={dashboard.currentHigh}
-            currentLow={dashboard.currentLow}
             weatherIcon={dashboard.weatherIcon}
+            todayHighLow={dashboard.todayHighLow}
             forecast={dashboard.forecast}
           />
         </div>
