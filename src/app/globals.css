@@ -8,11 +8,13 @@
 .background-image-day {
   background-image: url('../assets/morning_sky.jpg');
   background-size: cover; 
-  height: 100vh
+  height: 100vh;
+  overflow-y: auto; 
 }
 
 .background-image-night {
   background-image: url('../assets/night_sky.jpg');
   background-size: cover; 
-  height: 100vh
+  height: 100vh;
+  overflow-y: auto; 
 }
