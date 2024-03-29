@@ -28,7 +28,7 @@ export default function NavBarComponent(props: INavBar) {
             <div className="bg-teal text-white flex justify-between">
                 <div className='flex items-center font-ThabitBold text-[40px]'>
                     <Image className='w-[90px]' src={cloudSun} alt="weather icon" />
-                    <div className='transform translate-y-2'>JOE'S WEATHER FORECAST</div>
+                    <div className='transform translate-y-2'>JOES WEATHER FORECAST</div>
                 </div>
                 <div onClick={handleToggle} className=' font-Thabit text-[24px] self-center flex justify-end transform translate-y-2 cursor-pointer'>
                     <div className=' me-6' >FAVORITES</div>

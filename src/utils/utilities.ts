@@ -86,7 +86,7 @@ export const getCurrentEpochTime = (): number => {
 
 export function deepClone<T>(obj: T): T {
     if (typeof obj !== 'object' || obj === null) {
-        return obj; // Return the value if it's not an object
+        return obj; // Return the value if its not an object
     }
 
     // Create a new object/array to hold the cloned properties

@@ -31,12 +31,15 @@ const DashboardComponent = (props: IDashboard) => {
       <div className="mainBody font-Thabit">
         <div className="leftPanel">
           <div id="location" className='text-[36px] w-[90%] relative flex justify-center'>
+            {props.star?
             <Image
             onClick={props.favoriteClickHandle}
               src={props.star} // Assuming props.weatherIcon is the URL of the weather icon
               alt="favorited icon"
               className="absolute top-2 right-0 w-8 h-auto cursor-pointer "
-            />
+            /> : null             
+            }
+
             <div>
               {props.city}
             </div>
