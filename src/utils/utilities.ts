@@ -16,14 +16,22 @@ import sun from "@/assets/WeatherIcons/Sun.png";
 export const GetLocation = async () => {
 
     let lat = 44.34;
-    let lon = 10.99;
+    let lon = 83.04;
 
-    const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
+    try {
+        const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
 
-    lat = position.coords.latitude;
-    lon = position.coords.longitude;
+        console.log(position)
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+
+    } catch (error) {
+        console.error('No location given:', error);
+        // Handle error here
+    }
+
 
     return { lat, lon };
 }

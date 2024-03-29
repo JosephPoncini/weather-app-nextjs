@@ -214,6 +214,7 @@ export default function Home() {
     const GetGeoLocation = async () => {
 
       let { lat, lon } = await GetLocation();
+      console.log(lat + "," + lon)
       let locationA: ILocation = {
         type: "Geo",
         lon: lon,
