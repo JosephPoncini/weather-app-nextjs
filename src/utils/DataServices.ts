@@ -1,5 +1,5 @@
 import { ILocation } from "@/interfaces/interfaces";
-import { APIkey } from "../../env/environment";
+import { APIkey } from "../env/environment";
 
 
 export const GetCurrentWeatherData = async (location: ILocation, units: string = 'imperial') => {

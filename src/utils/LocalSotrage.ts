@@ -9,12 +9,12 @@ export const saveToLocalStorage = (city : string, country : string) => {
         favorites.push(location);
     }
 
-    localStorage.setItem("Favorites", JSON.stringify(favorites));
+    localStorage.setItem("Weather Favorites", JSON.stringify(favorites));
 }
 
 export const getlocalStorage= ():string[]  => {
 
-    let localStorageData = localStorage.getItem("Favorites");
+    let localStorageData = localStorage.getItem("Weather Favorites");
 
     if (localStorageData == null) {
         return [];
@@ -33,6 +33,6 @@ export const removeFromLocalStorage = (city : string, country : string) => {
 
     favorites.splice(namedIndex, 1);
 
-    localStorage.setItem("Favorites", JSON.stringify(favorites))
+    localStorage.setItem("Weather Favorites", JSON.stringify(favorites))
 
 }
