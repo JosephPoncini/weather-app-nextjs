@@ -5,8 +5,14 @@
 @font-face { font-family:Thabit; src: url("../fonts/Thabit.ttf"); }
 @font-face { font-family:ThabitBold; src: url("../fonts/Thabit-Bold.ttf"); }
 
-.background-image {
+.background-image-day {
   background-image: url('../assets/morning_sky.jpg');
+  background-size: cover; 
+  height: 100vh
+}
+
+.background-image-night {
+  background-image: url('../assets/night_sky.jpg');
   background-size: cover; 
   height: 100vh
 }

@@ -25,8 +25,6 @@ import Clock from './Clock';
 
 const DashboardComponent = (props: IDashboard) => {
 
-  const [star, setStar] = useState<any>(emptyStar);
-  // console.log(props.forecast)
 
   return (
     <div className='w-[1200px]'>
@@ -34,9 +32,10 @@ const DashboardComponent = (props: IDashboard) => {
         <div className="leftPanel">
           <div id="location" className='text-[36px] w-[90%] relative flex justify-center'>
             <Image
-              src={star} // Assuming props.weatherIcon is the URL of the weather icon
+            onClick={props.favoriteClickHandle}
+              src={props.star} // Assuming props.weatherIcon is the URL of the weather icon
               alt="favorited icon"
-              className="absolute top-2 right-0 w-8 h-auto  "
+              className="absolute top-2 right-0 w-8 h-auto cursor-pointer "
             />
             <div>
               {props.city}
@@ -46,7 +45,7 @@ const DashboardComponent = (props: IDashboard) => {
             <Image src={props.weatherIcon} alt="weather icon" />
             <div id="description" className='text-[20px] text-center' >{props.description}</div>
           </div>
-          <Clock timezoneOffset={props.timezone} epochTime={props.epoch}/>
+          <Clock timezoneOffset={props.timezone} epochTime={props.epoch} />
         </div>
 
         <div className="rightTopPanel">
@@ -56,44 +55,27 @@ const DashboardComponent = (props: IDashboard) => {
 
         <div className="rightBottomPanel">
           {
-            props.forecast? props.forecast.map( (x, idx) => {
-              let id = `day${idx+1}`;
-              return(
+            props.forecast ? props.forecast.map((x, idx) => {
+              let id = `day${idx + 1}`;
+              return (
                 <div key={idx} id={id} className="dayName">{x.day}</div>
               )
             }) : null
           }
-          {/* <div id="day1" className="dayName">[Day]</div>
-          <div id="day2" className="dayName">[Day]</div>
-          <div id="day3" className="dayName">[Day]</div>
-          <div id="day4" className="dayName">[Day]</div>
-          <div id="day5" className="dayName">[Day]</div> */}
 
-          <div className="dayHL1 dayHighLow">
-            <Image src={""} alt="weather icon" className='w-[40px] h-[40px]' />
-            <div>[H:]</div>
-            <div>[L:]</div>
-          </div>
-          <div className="dayHL2 dayHighLow">
-            <Image src={""} alt="weather icon" className='w-[40px] h-[40px]' />
-            <div>[H:]</div>
-            <div>[L:]</div>
-          </div>
-          <div className="dayHL3 dayHighLow">
-            <Image src={""} alt="weather icon" className='w-[40px] h-[40px]' />
-            <div>[H:]</div>
-            <div>[L:]</div>
-          </div>
-          <div className="dayHL4 dayHighLow">
-            <Image src={""} alt="weather icon" className='w-[40px] h-[40px]' />
-            <div>[H:]</div>
-            <div>[L:]</div>
-          </div>
-          <div className="dayHL5 dayHighLow">
-            <Image src={""} alt="weather icon" className='w-[40px] h-[40px]' />
-            <div>[H:]</div>
-            <div>[L:]</div>
-          </div>
+          {
+            props.forecast ? props.forecast.map((x, idx) => {
+              let className = `dayHL${idx + 1} dayHighLow `;
+              return (
+                <div key={idx} className={className}>
+                  <Image src={x.weatherIcon} alt="weather icon" className='w-[40px] h-[40px]' />
+                  <div>H:{x.highLow.high + "°" + props.units}</div>
+                  <div>L:{x.highLow.low + "°" + props.units}</div>
+                </div>
+              )
+            }) : null
+          }
+
         </div>
 
       </div>

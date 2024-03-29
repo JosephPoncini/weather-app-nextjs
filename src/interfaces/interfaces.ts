@@ -1,8 +1,10 @@
 export interface ILocation {
-  type: "Geo" | "City" | null;
+  type: "Geo" | "City" | "Zip" | "CityCountry" | null;
   lon: number | null;
   lat: number | null;
-  city: string | null
+  city: string | null;
+  country: string | null;
+  zip : string | null
 }
 
 export interface IDailyWeather {
@@ -31,6 +33,12 @@ export interface IDashboard {
   weatherIcon: string
   todayHighLow: IHighLow
   forecast: IDailyWeather[]
+  star: string
+  favoriteClickHandle: () => void
+}
+
+export interface INavBar {
+  searchClickHandle: (search:string) => void
 }
 
 export interface IWeatherData {
@@ -138,3 +146,5 @@ interface WeatherItem {
   };
   dt_txt: string;
 }
+
+export interface IBadSearch {cod: '404', message: 'city not found'}

@@ -124,49 +124,8 @@ export function GetFiveDayData(data:IWeatherForecastData, unit:'F'|'C'='F') {
     //---------------------------------------Get Highs and Lows
 
     let todaysHigh = GetDaysMaxTemp(maxTemps, 0);
-    let day1High = GetDaysMaxTemp(maxTemps, 1);
-    let day2High = GetDaysMaxTemp(maxTemps, 2);
-    let day3High = GetDaysMaxTemp(maxTemps, 3);
-    let day4High = GetDaysMaxTemp(maxTemps, 4);
-    let day5High = GetDaysMaxTemp(maxTemps, 5);
-
 
     let todaysLow = GetDaysMinTemp(minTemps, 0);
-    let day1Low = GetDaysMinTemp(minTemps, 1);
-    let day2Low = GetDaysMinTemp(minTemps, 2);
-    let day3Low = GetDaysMinTemp(minTemps, 3);
-    let day4Low = GetDaysMinTemp(minTemps, 4);
-    let day5Low = GetDaysMinTemp(minTemps, 5);
-
-
-    let day1Weather = DetermineForecastedWeather(weathers, descriptions, 1, m);
-    let day2Weather = DetermineForecastedWeather(weathers, descriptions, 2, m);
-    let day3Weather = DetermineForecastedWeather(weathers, descriptions, 3, m);
-    let day4Weather = DetermineForecastedWeather(weathers, descriptions, 4, m);
-    let day5Weather = DetermineForecastedWeather(weathers, descriptions, 5, m);
-
-    // ------------------------------------- Console Logging
-
-    // console.log("The max temp today is: " + todaysHigh + " " + unit);
-    // console.log("The min temp today is: " + todaysLow + " " + unit);
-
-    // console.log("Day 1 Max Temp is " + day1High);
-    // console.log("Day 1 Min Temp is " + day1Low);
-    // console.log("Day 2 Max Temp is " + day2High);
-    // console.log("Day 2 Min Temp is " + day2Low);
-    // console.log("Day 3 Max Temp is " + day3High);
-    // console.log("Day 3 Min Temp is " + day3Low);
-    // console.log("Day 4 Max Temp is " + day4High);
-    // console.log("Day 4 Min Temp is " + day4Low);
-    // console.log("Day 5 Max Temp is " + day5High);
-    // console.log("Day 5 Min Temp is " + day5Low);
-
-    // console.log("On Day 1 it will be " + day1Weather);
-    // console.log("On Day 2 it will be " + day2Weather);
-    // console.log("On Day 3 it will be " + day3Weather);
-    // console.log("On Day 4 it will be " + day4Weather);
-    // console.log("On Day 5 it will be " + day5Weather);
-
 
 
     let forecast: IDailyWeather[] = [];
@@ -192,8 +151,8 @@ export function GetFiveDayData(data:IWeatherForecastData, unit:'F'|'C'='F') {
             day: tomorrow,
             weatherIcon: GetWeatherIcon(DetermineForecastedWeather(weathers, descriptions, i, m),"",false),
             highLow: {
-                high:GetDaysMaxTemp(maxTemps, i),
-                low: GetDaysMinTemp(minTemps, i)
+                high:Math.round(GetDaysMaxTemp(maxTemps, i)),
+                low: Math.round(GetDaysMinTemp(minTemps, i))
             }
         }
 
@@ -201,12 +160,12 @@ export function GetFiveDayData(data:IWeatherForecastData, unit:'F'|'C'='F') {
 
     }
 
-    console.log(forecast);
+    // console.log(forecast);
 
 
     let todaysHighLow: IHighLow = {
-        high: todaysHigh,
-        low: todaysLow
+        high: Math.round(todaysHigh),
+        low: Math.round(todaysLow)
     }
 
     let res: IForecast = {
@@ -324,8 +283,11 @@ function linearRegression(x:number[], y:number[]) { //Got help at the following 
 function DetermineForecastedWeather(weathers:string[], descriptions:string[], dayNumber:number, m:number) {
     let weatherOptions = ['Tornado', 'Snow', 'Thunderstorm', 'Rain', 'Drizzle', 'Mist', 'Smoke', 'Haze', 'Dust', 'Fog', 'Sand', 'Ash', 'Squall','Overcast Cloudy', 'Cloudy','Partly Cloudy', 'Clear'];
     let weatherTriggers = new Array(weatherOptions.length).fill(false);
-    let cloudCounter = 0;
     m = m - 1;
+
+    // console.log('day '+dayNumber)
+    // console.log(weathers);
+    // console.log(descriptions);
 
     const cloudKeys: Record<string, string> = {
         'few clouds': 'Partly Cloudy',
@@ -339,26 +301,25 @@ function DetermineForecastedWeather(weathers:string[], descriptions:string[], da
         for (let i = 0; i < m; i++) {
             let currentWeather = weathers[8 * (dayNumber - 1) + (8 - m) + i];
             let currentdescription = descriptions[8 * (dayNumber - 1) + (8 - m) + i];
-            for (let j = 0; j < 15; j++) {
-                if(currentWeather == 'Clouds'){
-                    currentWeather = cloudKeys[currentdescription];
-        
-                }
+            if(currentWeather == 'Clouds'){
+                currentWeather = cloudKeys[currentdescription];
+    
+            }
+            for (let j = 0; j < weatherOptions.length; j++) {
                 if (currentWeather == weatherOptions[j]) {
                     weatherTriggers[j] = true;
                 }
             }
 
         }
-        cloudCounter = cloudCounter * (8 / (m - 1));
     } else {
         for (let i = 0; i < 8; i++) {
             let currentWeather = weathers[8 * (dayNumber - 1) + (8 - m) + i];
             let currentdescription = descriptions[8 * (dayNumber - 1) + (8 - m) + i];
-            for (let j = 0; j < 15; j++) {
-                if(currentWeather == 'Clouds'){
-                    currentWeather = cloudKeys[currentdescription];
-                }
+            if(currentWeather == 'Clouds'){
+                currentWeather = cloudKeys[currentdescription];
+            }
+            for (let j = 0; j < weatherOptions.length; j++) {
                 if (currentWeather == weatherOptions[j]) {
                     weatherTriggers[j] = true;
                 }
@@ -367,14 +328,12 @@ function DetermineForecastedWeather(weathers:string[], descriptions:string[], da
     }
 
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < weatherOptions.length; i++) {
         if (weatherTriggers[i]) {
             return weatherOptions[i];
         }
     }
-    console.log('day '+m)
-    console.log(weathers);
-    console.log(descriptions);
+
     return "Something went wrong";
 
 }

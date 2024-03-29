@@ -82,7 +82,7 @@ export const GetWeatherIcon = (weather: string, description: string, nighttime: 
 
 export const getCurrentEpochTime = (): number => {
     return Math.floor(Date.now() / 1000);
-  };
+};
 
 export function deepClone<T>(obj: T): T {
     if (typeof obj !== 'object' || obj === null) {
@@ -100,4 +100,14 @@ export function deepClone<T>(obj: T): T {
     }
 
     return clone;
+}
+
+export function isCityCountryFormat(location: string) {
+    const regex = /^[a-zA-Z\s]+,\s[a-zA-Z\s]+$/;
+    return regex.test(location);
+}
+
+export function isZipCode(zip: string) {
+    const regex = /^\d{5}(?:-\d{4})?(?:,\s?[A-Z]{2})?$/;
+    return regex.test(zip);
 }
