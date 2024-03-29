@@ -299,8 +299,8 @@ export default function Home() {
   return (
     <div className={backgroundClassName}>
       <NavBarComponent searchClickHandle={searchUp}/>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[31.5vh] flex flex-col items-center">
-        <div className="my-8 w-[700px]">
+      <div className="lg:absolute lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-[31.5vh] flex flex-col items-center">
+        <div className="my-8 lg:w-[700px]">
           <SearchBarComponent onChangeHandle={setSearchInput} value={searchInput} searchBtnHandle={searchBtn} />
         </div>
         <div>
