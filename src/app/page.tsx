@@ -21,7 +21,7 @@ import snowflake from "@/assets/WeatherIcons/Snowflake.png";
 import sun from "@/assets/WeatherIcons/Sun.png";
 
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { GetFiveDayData } from "@/utils/forecastUtilities";
 
 import emptyStar from "@/assets/Empty Star.png"
@@ -31,14 +31,25 @@ import { getlocalStorage, removeFromLocalStorage, saveToLocalStorage } from "@/u
 
 export default function Home() {
 
-  const nowhere: ILocation = {
-    type: null,
-    lon: null,
-    lat: null,
-    city: null,
-    country: null,
-    zip: null
-  }
+  const [nowhere, setNowhere] = useState<ILocation>(
+    {
+      type: null,
+      lon: null,
+      lat: null,
+      city: null,
+      country: null,
+      zip: null
+    }
+  )
+
+  // const nowhere: ILocation = {
+  //   type: null,
+  //   lon: null,
+  //   lat: null,
+  //   city: null,
+  //   country: null,
+  //   zip: null
+  // }
 
   const emptyHighLow: IHighLow = {
     high: 0,
