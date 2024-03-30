@@ -173,7 +173,7 @@ export default function Home() {
       setStar(emptyStar);
       removeFromLocalStorage(cityName,countryName)
     }
-    console.log("isFavorited is " + isFavorited);
+    // console.log("isFavorited is " + isFavorited);
   }
 
   const searchBtn = () => {
@@ -214,7 +214,7 @@ export default function Home() {
     const GetGeoLocation = async () => {
 
       let { lat, lon } = await GetLocation();
-      console.log(lat + "," + lon)
+      // console.log(lat + "," + lon)
       let locationA: ILocation = {
         type: "Geo",
         lon: lon,

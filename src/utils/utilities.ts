@@ -15,8 +15,8 @@ import sun from "@/assets/WeatherIcons/Sun.png";
 
 export const GetLocation = async () => {
 
-    let lat = 44.34;
-    let lon = 83.04;
+    let lat = 62.035454;
+    let lon = 129.675476;
 
     try {
         const position = await new Promise<GeolocationPosition>((resolve, reject) => {
@@ -28,7 +28,7 @@ export const GetLocation = async () => {
         lon = position.coords.longitude;
 
     } catch (error) {
-        console.error('No location given:', error);
+        // console.error('No location given:', error);
         // Handle error here
     }
 
