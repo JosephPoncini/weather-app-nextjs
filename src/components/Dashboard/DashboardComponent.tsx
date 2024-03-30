@@ -53,7 +53,7 @@ const DashboardComponent = (props: IDashboard) => {
 
         <div className="rightTopPanel">
           <div id="currentTemp" className='text-[96px] tracking-[-0.1em]'>{props.currentTemp + "°" + props.units}</div>
-          <div id="currentHL" className='text-[36px]'>H:{props.todayHighLow.high}°{props.units} L:{props.todayHighLow.low}</div>
+          <div id="currentHL" className='text-[36px]'>H:{props.todayHighLow.high}°{props.units} L:{props.todayHighLow.low}°{props.units}</div>
         </div>
 
         <div className="rightBottomPanel">
