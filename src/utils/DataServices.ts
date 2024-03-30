@@ -56,7 +56,7 @@ export const GetWeatherForecastData = async (location: ILocation, units: string 
             data = await promise.json();
             break;
         default:
-            console.log("No fetch. An error has occured");
+            // console.log("No fetch. An error has occured");
     }
 
     // console.log(data);
