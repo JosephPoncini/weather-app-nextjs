@@ -8,7 +8,7 @@
 
 // You can search by City or City, Country (ex. New York, US), or zip code, country (ex. 12345, AB)
 
-// Comment Addressed: I gave the site a random default location of Druzhba, Kazakhastan in case user doesn't give their geo coordinates (JP 03.29.2024 4 pm)
+// Comment Addressed: I gave the site a random default location of Yakutsk, RU in case user doesn't give their geo coordinates (JP 03.29.2024 4 pm)
 
 // Peer Review by: Jayvon Khuth
 
